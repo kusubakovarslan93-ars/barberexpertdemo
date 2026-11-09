@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BARBER EXPERT Бишкек</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: deep navy world, white type, barber-pole red as the single accent; bilingual RU/EN; booking sheet sends to WhatsApp */
+:root{
+  --bg:#0e1524;
+  --surface:#151e31;
+  --line:#26314a;
+  --text:#f2f4f8;
+  --muted:#9aa5bb;
+  --red:#e2343f;
+  --star:#f5c542;
+  --display:"Unbounded", system-ui, sans-serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;padding-bottom:80px}
+a{color:var(--text)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,5vw,2.4rem)}
+section{padding:64px 0;border-top:1px solid var(--line)}
+.kicker{color:var(--red);font-weight:800;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;display:block}
+.lead{color:var(--muted);max-width:54ch;margin:12px 0 0}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(14,21,36,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.04em}
+.pole{width:12px;height:30px;border-radius:6px;border:2px solid var(--text);background:repeating-linear-gradient(135deg,var(--red) 0 5px,#fff 5px 10px,#2f63d6 10px 15px,#fff 15px 20px);background-size:100% 40px;animation:pole 2.4s linear infinite}
+@keyframes pole{to{background-position:0 40px}}
+.nav nav{display:flex;gap:22px}
+.nav nav a{color:var(--muted);text-decoration:none;font-weight:700;font-size:.9rem}
+.nav nav a:hover{color:var(--text)}
+.right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{font:inherit;font-size:.78rem;font-weight:800;padding:6px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+@media (max-width:760px){.nav nav{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:10px;font-weight:800;font-size:.98rem;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:var(--body);transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn-red{background:var(--red);color:#fff}
+.btn-line{background:transparent;color:var(--text);border-color:var(--line)}
+.btn-sm{padding:9px 14px;font-size:.85rem}
+
+/* hero */
+.hero{border-top:0;padding:64px 0 56px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+@media (max-width:800px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.2rem,7vw,4rem)}
+.hero h1 span{color:var(--red)}
+.hero p{color:var(--muted);font-size:1.08rem;max-width:46ch;margin:18px 0 26px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.rating{display:flex;align-items:center;gap:14px;margin-top:30px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface);width:fit-content}
+.rating .num{font-family:var(--display);font-size:2rem;font-weight:800}
+.stars{color:var(--star);letter-spacing:2px;font-size:1.05rem}
+.rating small{display:block;color:var(--muted);font-size:.85rem}
+.card-hours{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.card-hours h3{font-size:1rem;margin-bottom:14px}
+.status{display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:.85rem;padding:6px 12px;border-radius:999px;background:rgba(60,200,120,.14);color:#53d68f;margin-bottom:14px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.status.closed{background:rgba(226,52,63,.14);color:#ff6b74}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.95rem}
+td{padding:9px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right;color:var(--muted)}
+tr.today td{color:var(--text);font-weight:800}
+tr.off td:last-child{color:#ff6b74}
+
+/* services */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+@media (max-width:860px){.svc{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.svc{grid-template-columns:1fr}}
+.s{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.s .ic{width:44px;height:44px;border-radius:12px;background:rgba(226,52,63,.12);display:flex;align-items:center;justify-content:center}
+.s .ic svg{width:24px;height:24px}
+.s h3{font-size:1.02rem;font-family:var(--body);font-weight:800}
+.s p{margin:0;color:var(--muted);font-size:.9rem;flex:1}
+.s .foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:12px;border-top:1px dashed var(--line)}
+.s .pr{font-family:var(--display);font-weight:700;font-variant-numeric:tabular-nums}
+.s .pr small{color:var(--muted);font-family:var(--body);font-weight:500;font-size:.78rem}
+.s .t{color:var(--muted);font-size:.82rem}
+.note{color:var(--muted);font-size:.82rem;margin-top:14px}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+@media (max-width:860px){.why{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.why{grid-template-columns:1fr}}
+.why div{border-left:3px solid var(--red);padding:4px 0 4px 16px}
+.why b{display:block;font-family:var(--display);font-size:1rem;margin-bottom:6px}
+.why span{color:var(--muted);font-size:.9rem}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:160px;gap:12px;margin-top:28px}
+.gal div{border-radius:14px;border:1px dashed var(--line);background:var(--surface);display:flex;align-items:flex-end;padding:14px;color:var(--muted);font-size:.85rem;font-weight:700}
+.gal div:first-child{grid-row:span 2}
+@media (max-width:600px){.gal{grid-template-columns:1fr 1fr;grid-auto-rows:130px}.gal div:first-child{grid-column:span 2;grid-row:auto}}
+
+/* contact */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media (max-width:800px){.two{grid-template-columns:1fr}}
+.clist{display:grid;gap:10px;margin-top:22px}
+.clist a,.clist div{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;font-weight:800}
+.clist small{display:block;color:var(--muted);font-weight:500;font-size:.82rem}
+.clist .i{flex:none;width:40px;height:40px;border-radius:10px;background:rgba(226,52,63,.12);display:flex;align-items:center;justify-content:center}
+.clist .i svg{width:22px;height:22px}
+.map{height:100%;min-height:240px;border-radius:16px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);font-size:.9rem;padding:16px;
+  background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/30px 30px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/30px 30px,var(--surface)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.demo{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.75rem}
+
+/* sticky bar + booking sheet */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:68px}
+.bar span{color:var(--muted);font-size:.88rem}
+.bg{position:fixed;inset:0;background:rgba(5,8,15,.6);z-index:40;display:none}
+.bg.open{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--surface);border-top:1px solid var(--line);border-radius:22px 22px 0 0;max-height:90%;overflow:auto;transform:translateY(105%);transition:transform .25s ease}
+.sheet.open{transform:none}
+.sheet .in{max-width:540px;margin:0 auto;padding:22px 18px 28px;display:grid;gap:14px}
+.sh{display:flex;justify-content:space-between;align-items:center}
+.x{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:1.1rem;cursor:pointer}
+label{display:grid;gap:6px;font-size:.85rem;font-weight:700;color:var(--muted)}
+input,select{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slots button{font:inherit;font-weight:800;font-size:.88rem;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;font-variant-numeric:tabular-nums}
+.slots button[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
+.hint{color:var(--muted);font-size:.84rem;margin:0}
+.err{color:#ff6b74;font-size:.86rem;margin:0;min-height:1.2em}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><span class="pole" aria-hidden="true"></span>BARBER EXPERT</a>
+    <nav>
+      <a href="#uslugi" data-i="nav1">Услуги</a>
+      <a href="#pochemu" data-i="nav2">О нас</a>
+      <a href="#kontakty" data-i="nav3">Контакты</a>
+    </nav>
+    <div class="right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker" data-i="hk">Барбершоп · Бишкек</span>
+        <h1 data-i="h1" data-html="1">Мужские стрижки <span>уровня мастера</span></h1>
+        <p data-i="hp">Стрижка, фейд и борода на Тыныстанова. Мастера говорят по-английски, поэтому к нам удобно приходить и гостям города.</p>
+        <div class="btns">
+          <button class="btn btn-red js-book" type="button" data-i="b1">Записаться онлайн</button>
+          <a class="btn btn-line" href="#uslugi" data-i="b2">Услуги и цены</a>
+        </div>
+        <div class="rating">
+          <span class="num">5.0</span>
+          <span><span class="stars" aria-label="5 из 5">★★★★★</span><small data-i="rt">616 отзывов в Google</small></span>
+        </div>
+      </div>
+      <div class="card-hours">
+        <span class="status" id="status">Открыто</span>
+        <h3 data-i="hh">Часы работы</h3>
+        <table id="hours"></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="uslugi">
+    <div class="wrap">
+      <span class="kicker" data-i="sk">Услуги</span>
+      <h2 data-i="sh">Что мы делаем</h2>
+      <div class="svc" id="svc"></div>
+      <p class="note" data-i="sn">Цены примерные, в настоящем сайте поставим ваши.</p>
+    </div>
+  </section>
+
+  <section id="pochemu">
+    <div class="wrap">
+      <span class="kicker" data-i="wk">Почему мы</span>
+      <h2 data-i="wh">За что нас ценят</h2>
+      <div class="why">
+        <div><b data-i="w1">Стрижка как вы хотите</b><span data-i="w1t">Покажите фото, и мастер сделает так же.</span></div>
+        <div><b data-i="w2">English spoken</b><span data-i="w2t">Мастера говорят по-английски.</span></div>
+        <div><b data-i="w3">Чисто и аккуратно</b><span data-i="w3t">Стерильные инструменты и порядок в зале.</span></div>
+        <div><b data-i="w4">Честные цены</b><span data-i="w4t">Без скрытых доплат, цена известна заранее.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="kicker" data-i="gk">Работы</span>
+      <h2 data-i="gh">Наши стрижки</h2>
+      <div class="gal">
+        <div data-i="g1">Фото из вашего Instagram</div>
+        <div data-i="g2">Фейд</div>
+        <div data-i="g3">Борода</div>
+        <div data-i="g4">Классика</div>
+        <div data-i="g5">Зал</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakty">
+    <div class="wrap two">
+      <div>
+        <span class="kicker" data-i="ck">Контакты</span>
+        <h2 data-i="ch">Как нас найти</h2>
+        <div class="clist">
+          <div><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span><span data-i="addr">ул. Тыныстанова, 189а</span><small data-i="city">Бишкек</small></span></div>
+          <a href="tel:+996554011720"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span><span>+996 554 011 720<small data-i="call">Позвонить</small></span></a>
+          <a href="https://wa.me/996554011720"><span class="i"><svg viewBox="0 0 24 24" fill="#e2343f"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg></span><span>WhatsApp<small data-i="wa">Написать или записаться</small></span></a>
+        </div>
+      </div>
+      <div class="map" data-i="map">Здесь будет карта 2ГИС или Google с точкой барбершопа</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 BARBER EXPERT, Бишкек</span>
+    <span class="demo" data-i="demo">Демо-концепт сайта</span>
+  </div>
+</footer>
+
+<div class="bar">
+  <div class="wrap">
+    <span data-i="barT">Запись за 1 минуту</span>
+    <button class="btn btn-red btn-sm js-book" type="button" data-i="b1">Записаться онлайн</button>
+  </div>
+</div>
+
+<div class="bg" id="bg"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="bkT">
+  <div class="in">
+    <div class="sh"><h2 id="bkT" style="font-size:1.3rem" data-i="bkT">Запись</h2><button class="x" id="close" type="button" aria-label="Close">✕</button></div>
+    <label for="b-svc"><span data-i="fS">Услуга</span><select id="b-svc"></select></label>
+    <label for="b-date"><span data-i="fD">Дата</span><input id="b-date" type="date"></label>
+    <div><span style="font-size:.85rem;font-weight:700;color:var(--muted)" data-i="fT">Время</span><div class="slots" id="slots" style="margin-top:8px"></div></div>
+    <div class="row">
+      <label for="b-name"><span data-i="fN">Имя</span><input id="b-name" autocomplete="name"></label>
+      <label for="b-phone"><span data-i="fP">Телефон</span><input id="b-phone" type="tel" autocomplete="tel" placeholder="+996"></label>
+    </div>
+    <p class="err" id="err" role="status"></p>
+    <a class="btn btn-red" id="send" href="#" data-i="send">Отправить запись в WhatsApp</a>
+    <p class="hint" data-i="hint">Откроется WhatsApp с готовым сообщением. Мастер подтвердит время.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var WA='996554011720';
+  var T={
+    ru:{nav1:'Услуги',nav2:'О нас',nav3:'Контакты',hk:'Барбершоп · Бишкек',h1:'Мужские стрижки <span>уровня мастера</span>',hp:'Стрижка, фейд и борода на Тыныстанова. Мастера говорят по-английски, поэтому к нам удобно приходить и гостям города.',b1:'Записаться онлайн',b2:'Услуги и цены',rt:'616 отзывов в Google',hh:'Часы работы',sk:'Услуги',sh:'Что мы делаем',sn:'Цены примерные, в настоящем сайте поставим ваши.',wk:'Почему мы',wh:'За что нас ценят',w1:'Стрижка как вы хотите',w1t:'Покажите фото, и мастер сделает так же.',w2:'English spoken',w2t:'Мастера говорят по-английски.',w3:'Чисто и аккуратно',w3t:'Стерильные инструменты и порядок в зале.',w4:'Честные цены',w4t:'Без скрытых доплат, цена известна заранее.',gk:'Работы',gh:'Наши стрижки',g1:'Фото из вашего Instagram',g2:'Фейд',g3:'Борода',g4:'Классика',g5:'Зал',ck:'Контакты',ch:'Как нас найти',addr:'ул. Тыныстанова, 189а',city:'Бишкек',call:'Позвонить',wa:'Написать или записаться',map:'Здесь будет карта 2ГИС или Google с точкой барбершопа',demo:'Демо-концепт сайта',barT:'Запись за 1 минуту',bkT:'Запись',fS:'Услуга',fD:'Дата',fT:'Время',fN:'Имя',fP:'Телефон',send:'Отправить запись в WhatsApp',hint:'Откроется WhatsApp с готовым сообщением. Мастер подтвердит время.',
+        open:'Открыто до 20:00',closed:'Сейчас закрыто',off:'выходной',som:'сом',min:'мин',
+        days:['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
+        e1:'Выберите время.',e2:'Введите имя и телефон.',e3:'В этот день выходной, выберите другую дату.',
+        msg:'Здравствуйте! Хочу записаться в BARBER EXPERT.',mS:'Услуга',mD:'Дата',mT:'Время',mN:'Имя',mP:'Телефон'},
+    en:{nav1:'Services',nav2:'About',nav3:'Contact',hk:'Barbershop · Bishkek',h1:'Men’s haircuts <span>done by experts</span>',hp:'Haircuts, fades and beard work on Tynystanov Street. Our barbers speak English, so visitors to Bishkek feel at home.',b1:'Book online',b2:'Services & prices',rt:'616 reviews on Google',hh:'Opening hours',sk:'Services',sh:'What we do',sn:'Sample prices. The real site will show yours.',wk:'Why us',wh:'What clients value',w1:'The cut you ask for',w1t:'Show a photo and your barber will match it.',w2:'English spoken',w2t:'Our barbers speak English.',w3:'Clean and tidy',w3t:'Sterile tools and a clean shop.',w4:'Fair prices',w4t:'No hidden extras. You know the price upfront.',gk:'Work',gh:'Our cuts',g1:'Photos from your Instagram',g2:'Fade',g3:'Beard',g4:'Classic',g5:'Shop',ck:'Contact',ch:'Find us',addr:'189a Tynystanov St',city:'Bishkek',call:'Call',wa:'Message or book',map:'A 2GIS or Google map with the shop pin goes here',demo:'Website demo concept',barT:'Book in 1 minute',bkT:'Book a visit',fS:'Service',fD:'Date',fT:'Time',fN:'Name',fP:'Phone',send:'Send booking via WhatsApp',hint:'WhatsApp opens with a ready message. The barber confirms the time.',
+        open:'Open until 8 PM',closed:'Closed now',off:'closed',som:'som',min:'min',
+        days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+        e1:'Choose a time.',e2:'Enter your name and phone.',e3:'We are closed that day. Pick another date.',
+        msg:'Hello! I would like to book at BARBER EXPERT.',mS:'Service',mD:'Date',mT:'Time',mN:'Name',mP:'Phone'}
+  };
+  var SVC=[
+    {ru:'Мужская стрижка',en:'Men’s haircut',dru:'Мытьё, стрижка, укладка',den:'Wash, cut and style',p:600,m:45,ic:'sc'},
+    {ru:'Фейд',en:'Skin fade',dru:'Плавный переход и чёткий контур',den:'Smooth blend and sharp lines',p:700,m:50,ic:'sc'},
+    {ru:'Стрижка + борода',en:'Haircut + beard',dru:'Полный образ за один визит',den:'The full look in one visit',p:1000,m:75,ic:'combo'},
+    {ru:'Оформление бороды',en:'Beard trim',dru:'Форма, длина, контур',den:'Shape, length and lines',p:400,m:30,ic:'beard'},
+    {ru:'Детская стрижка',en:'Kids haircut',dru:'До 12 лет',den:'Up to 12 years',p:400,m:30,ic:'kid'},
+    {ru:'Камуфляж седины',en:'Grey blending',dru:'Естественный тон без эффекта краски',den:'Natural tone, no dyed look',p:600,m:30,ic:'tone'}
+  ];
+  var ICONS={
+    sc:'<svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8 16 20 3M16 16 4 3"/></svg>',
+    combo:'<svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M7 12c0 5 2.5 8 5 8s5-3 5-8"/></svg>',
+    beard:'<svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><path d="M5 8c0 8 3 13 7 13s7-5 7-13"/><path d="M9 14h6"/></svg>',
+    kid:'<svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><circle cx="12" cy="9" r="4"/><path d="M6 21c1-4 3.5-6 6-6s5 2 6 6"/></svg>',
+    tone:'<svg viewBox="0 0 24 24" fill="none" stroke="#e2343f" stroke-width="2"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>'
+  };
+  /* Mon-Wed, Fri-Sat 9-20; Thu, Sun closed (getDay: 0=Sun) */
+  var OPEN={0:null,1:[9,20],2:[9,20],3:[9,20],4:null,5:[9,20],6:[9,20]};
+  var lang='ru', slot=null;
+  try{var s=localStorage.getItem('be-lang'); if(s==='en'||s==='ru') lang=s;}catch(e){}
+
+  function bk(){var n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+6*3600000);}
+  function render(){
+    var t=T[lang]; document.documentElement.lang=lang;
+    document.querySelectorAll('[data-i]').forEach(function(el){var v=t[el.dataset.i]; if(v==null) return; if(el.dataset.html) el.innerHTML=v; else el.textContent=v;});
+    document.querySelectorAll('.lang button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===lang?'true':'false');});
+    var now=bk(), wd=now.getDay(), h=now.getHours()+now.getMinutes()/60;
+    var order=[1,2,3,4,5,6,0];
+    document.getElementById('hours').innerHTML=order.map(function(d){var o=OPEN[d];
+      return '<tr class="'+(d===wd?'today ':'')+(o?'':'off')+'"><td>'+t.days[d]+'</td><td>'+(o?'09:00 – 20:00':t.off)+'</td></tr>';}).join('');
+    var st=document.getElementById('status'), o=OPEN[wd], isOpen=o&&h>=o[0]&&h<o[1];
+    st.textContent=isOpen?t.open:t.closed; st.classList.toggle('closed',!isOpen);
+    document.getElementById('svc').innerHTML=SVC.map(function(s){
+      return '<div class="s"><span class="ic">'+ICONS[s.ic]+'</span><h3>'+s[lang]+'</h3><p>'+s['d'+lang]+'</p><div class="foot"><span class="pr">'+s.p+' <small>'+t.som+'</small></span><span class="t">~'+s.m+' '+t.min+'</span></div></div>';}).join('');
+    var sel=document.getElementById('b-svc'), cur=sel.selectedIndex;
+    sel.innerHTML=SVC.map(function(s){return '<option>'+s[lang]+' · '+s.p+' '+t.som+'</option>';}).join('');
+    if(cur>=0) sel.selectedIndex=cur;
+    slots(); link();
+  }
+  function slots(){
+    var d=new Date(document.getElementById('b-date').value+'T00:00'), o=OPEN[d.getDay()], box=document.getElementById('slots'), t=T[lang];
+    if(!o){box.innerHTML='<span class="hint">'+t.e3+'</span>';slot=null;return;}
+    var out=[]; for(var x=o[0]*60;x<=o[1]*60-60;x+=30){var hh=('0'+Math.floor(x/60)).slice(-2)+':'+('0'+x%60).slice(-2);out.push(hh);}
+    if(out.indexOf(slot)<0) slot=null;
+    box.innerHTML=out.map(function(s){return '<button type="button" aria-pressed="'+(s===slot)+'" data-s="'+s+'">'+s+'</button>';}).join('');
+  }
+  function link(){
+    var t=T[lang], d=document.getElementById('b-date').value.split('-');
+    var msg=t.msg+'\n'+t.mS+': '+SVC[document.getElementById('b-svc').selectedIndex].ru+'\n'+t.mD+': '+d[2]+'.'+d[1]+'.'+d[0]+'\n'+t.mT+': '+(slot||'-')+'\n'+t.mN+': '+document.getElementById('b-name').value.trim()+'\n'+t.mP+': '+document.getElementById('b-phone').value.trim();
+    document.getElementById('send').href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+  }
+  /* default date: next open day */
+  var dd=bk(); dd.setDate(dd.getDate()+1); while(!OPEN[dd.getDay()]) dd.setDate(dd.getDate()+1);
+  var dEl=document.getElementById('b-date');
+  dEl.value=dd.getFullYear()+'-'+('0'+(dd.getMonth()+1)).slice(-2)+'-'+('0'+dd.getDate()).slice(-2);
+  dEl.min=dEl.value.slice(0,8)+'01';
+
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){lang=b.dataset.lang;try{localStorage.setItem('be-lang',lang);}catch(e){}render();});});
+  document.getElementById('slots').addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;slot=b.dataset.s;slots();link();document.getElementById('err').textContent='';});
+  dEl.addEventListener('change',function(){slots();link();});
+  ['b-svc','b-name','b-phone'].forEach(function(id){document.getElementById(id).addEventListener('input',link);});
+  document.getElementById('send').addEventListener('click',function(e){
+    var t=T[lang], err=document.getElementById('err');
+    if(!slot){e.preventDefault();err.textContent=t.e1;return;}
+    if(!document.getElementById('b-name').value.trim()||!document.getElementById('b-phone').value.trim()){e.preventDefault();err.textContent=t.e2;return;}
+    err.textContent='';
+  });
+  var sh=document.getElementById('sheet'), bg=document.getElementById('bg');
+  function open(){sh.classList.add('open');bg.classList.add('open');}
+  function close(){sh.classList.remove('open');bg.classList.remove('open');}
+  document.querySelectorAll('.js-book').forEach(function(b){b.addEventListener('click',open);});
+  document.getElementById('close').addEventListener('click',close);
+  bg.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  render();
+})();
+</script>
+</body>
+</html>
